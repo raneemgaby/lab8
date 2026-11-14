@@ -29,8 +29,7 @@ app.get('/robots.txt',(req,res)=>{
      res.status(404).send('<h1>Page was not found</h1>');
 });
 app.get('app-page',(req,res)=>{
-    res.statusCode=300;
-    res.send('Redirecting to /hello');
+    res.redirect()
     res.status(404).send('<h1>Page was not found</h1>');
 });
 app.get('api/courses',(req,res)=>{

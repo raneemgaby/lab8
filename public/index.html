@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API Route Explorer</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main class="page">
+    <header class="intro">
+      <p class="eyebrow">Lab 8</p>
+      <h1>API Route Explorer</h1>
+      <p>
+        This programme demonstrates how a web application communicates with
+        API routes. Select a button to send a request and view the server's
+        response, including status codes and error responses.
+      </p>
+    </header>
+
+    <section class="panel" aria-labelledby="routes-title">
+      <h2 id="routes-title">Try an API route</h2>
+      <div class="route-list">
+        <button type="button" data-route="/api/courses">GET <code>/api/courses</code></button>
+        <button type="button" data-route="/api/status">GET <code>/api/status</code></button>
+        <button type="button" data-route="/api/headers">GET <code>/api/headers</code></button>
+        <button type="button" data-route="/api/subscribe" data-method="POST">POST <code>/api/subscribe</code></button>
+        <button type="button" data-route="/api/admin">GET <code>/api/admin</code></button>
+        <button type="button" data-route="/api/stats">GET <code>/api/stats</code></button>
+        <button type="button" data-route="/api/route-that-does-not-exist">GET <code>/api/route-that-does-not-exist</code></button>
+      </div>
+    </section>
+
+    <section class="panel response-panel" aria-labelledby="response-title">
+      <h2 id="response-title">Response</h2>
+      <p id="response-status" role="status" aria-live="polite">Choose a route to begin.</p>
+      <pre id="response-body">The server response will appear here.</pre>
+    </section>
+  </main>
+</body>
+</html>
