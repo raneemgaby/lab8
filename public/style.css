@@ -1,0 +1,33 @@
+body{
+    margin:0;
+    min-width:320px;
+    box-sizing:border-box;
+}
+.page{
+    width:min(900px,calc(100%-32px));
+    margin:48px auto;
+    box-sizing:border-box;
+}
+.intro{
+    margin-bottom:28px;
+}
+.eyebrow{
+    margin-bottom:8px;
+    color:#4058b5;
+    font-weight:700;
+    font-size:3px;
+    text-transform:uppercase;
+    box-sizing:border-box;
+}
+.route-list{
+    width:auto;
+    font-color:blue;
+    font-size:medium;
+    box-sizing:border-box;
+}
+
+#response-body{
+    margin:0;
+    font-color:black;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
