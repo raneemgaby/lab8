@@ -1,6 +1,16 @@
 import express from 'express';
-import path from 'path';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+
 const app=express();
+const serverFolder=path.dirname(fileURLToPath(import.meta.url));
+
+app.get('/',(req,res)=>{
+    res.sendFile(path.join(serverFolder, 'public', 'index.html'));
+     
+});
+app.use(express.static(path.join(serverFolder, 'public')));
+
 const PORT=process.env.PORT??3000;
 app.listen(PORT,()=>{
     console.log(`server is running at http://localhost:${PORT}`);
@@ -15,11 +25,6 @@ app.use((req,res,next)=>{
     requestsServed++;
     next();
 })
-
-app.get('/',(req,res)=>{
-    res.send('public/index.html');
-     res.status(404).send('<h1>Page was not found</h1>');
-});
 app.get('/hello',(req,res)=>{
     res.send('Hello from Raneem\'s server');
      res.status(404).send('<h1>Page was not found</h1>');

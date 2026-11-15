@@ -2,9 +2,10 @@ body{
     margin:0;
     min-width:320px;
     box-sizing:border-box;
+    background-color:yellowgreen;
 }
 .page{
-    width:min(900px,calc(100%-32px));
+    width:min(900px,calc(100% - 32px));
     margin:48px auto;
     box-sizing:border-box;
 }
@@ -14,20 +15,21 @@ body{
 .eyebrow{
     margin-bottom:8px;
     color:#4058b5;
-    font-weight:700;
+    font-weight:125;
     font-size:3px;
     text-transform:uppercase;
-    box-sizing:border-box;
 }
-.route-list{
+.route-list button{
     width:auto;
-    font-color:blue;
+    background-color:rgb(72, 72, 92);
+    color:papayawhip;
     font-size:medium;
     box-sizing:border-box;
 }
 
 #response-body{
     margin:0;
-    font-color:black;
+    background-color:black;
+    color:white;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
