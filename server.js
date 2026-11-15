@@ -1,9 +1,9 @@
 import express from 'express';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-const course1={'id':1,'title':'web prog','credit':6};
-const corese2={'id':2,'title':'interface-designing','credit':3};
-const course3={'id':3,'title':'OOP','credit':5};
+const courses=[{'id':1,'title':'web prog','credits':6},
+{'id':2,'title':'interface-designing','credits':3},
+{'id':3,'title':'OOP','creditscur':5}];
 
 const app=express();
 const serverFolder=path.dirname(fileURLToPath(import.meta.url));
@@ -32,7 +32,7 @@ app.get('/old-page',(req,res)=>{
     res.redirect('/hello');
 });
 app.get('/api/courses',(req,res)=>{
-    res.json({course1,corese2,course3});
+    res.json(courses);
 });
 app.get('/api/status',(req,res)=>{
     res.json({status: 200, nodeVersion: process.version, uptimeSeconds: process.uptime()});
