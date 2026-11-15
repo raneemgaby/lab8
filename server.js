@@ -1,72 +1,57 @@
 import express from 'express';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+const course1={'id':1,'title':'web prog','credit':6};
+const corese2={'id':2,'title':'interface-designing','credit':3};
+const course3={'id':3,'title':'OOP','credit':5};
 
 const app=express();
 const serverFolder=path.dirname(fileURLToPath(import.meta.url));
 
-app.get('/',(req,res)=>{
-    res.sendFile(path.join(serverFolder, 'public', 'index.html'));
-     
-});
-app.use(express.static(path.join(serverFolder, 'public')));
-
-const PORT=process.env.PORT??3000;
-app.listen(PORT,()=>{
-    console.log(`server is running at http://localhost:${PORT}`);
-});
-
 let requestsServed=0;
 app.use((req,res,next)=>{
-    console.log(`${req.timeStamp} ${req.method} ${req.url}`);
+    console.log(`${new Date().toISOString()} ${req.method} ${req.url}`);
     next();
 });
 app.use((req,res,next)=>{
     requestsServed++;
     next();
 })
+
+app.get('/',(req,res)=>{
+    res.sendFile(path.join(serverFolder, 'public', 'index.html'));
+     
+});
 app.get('/hello',(req,res)=>{
-    res.send('Hello from Raneem\'s server');
-     res.status(404).send('<h1>Page was not found</h1>');
+    res.type('text/plain').send("Hello from Raneem's server");
 });
 app.get('/robots.txt',(req,res)=>{
-    res.send('content-type: text');
-     res.status(404).send('<h1>Page was not found</h1>');
+    res.type('text/plain').send('User-agent: *\nDisallow:');
 });
-app.get('app-page',(req,res)=>{
-    res.redirect()
-    res.status(404).send('<h1>Page was not found</h1>');
+app.get('/old-page',(req,res)=>{
+    res.redirect('/hello');
 });
-app.get('api/courses',(req,res)=>{
-    res.json({'id': 1, 'title': 'Course 1', 'credits': 3});
-    res.status(404).json({'error': "Not found"});
+app.get('/api/courses',(req,res)=>{
+    res.json({course1,corese2,course3});
 });
-app.get('api/status',(req,res)=>{
+app.get('/api/status',(req,res)=>{
     res.json({status: 200, nodeVersion: process.version, uptimeSeconds: process.uptime()});
-    res.status(404).json({'error': "Not found"});
 });
-app.get('api/headers',(req,res)=>{
-    res.setHeader('User-Agent','Accept');
-    res.json({ 'User-Agent': req.get('User-Agent')});
-    res.json({'Accept': req.get('Accept')});
-    res.status(404).json({'error': "Not found"});
+app.get('/api/headers',(req,res)=>{
+    res.json({ 'User-Agent': req.get('User-Agent'),'Accept': req.get('Accept')});
 });
-app.post('api/subscribe',(req,res)=>{
+app.post('/api/subscribe',(req,res)=>{
     res.statusCode=201;
-    res.json({"subscribe":true});
-    res.status(404).json({'error': "Not found"});
+    res.json({"subscribed":true});
 });
-app.get('api/admin',(req,res)=>{
-    res.statusCode=403;
-    res.json({"error":"Forbidden"});
-    res.status(404).json({'error': "Not found"});
+app.get('/api/admin',(req,res)=>{
+    res.status(403).json({'error': "Forbidden"});
 });
-app.get('api/stats',(req,res)=>{
+app.get('/api/stats',(req,res)=>{
     res.json({requestsServed});
-    res.status(404).json({'error': "Not found"});
 });
 
-app.get('bye',(req,res)=>{
+app.get('/bye',(req,res)=>{
     res.status(404).send('Not Found');
 });
 app.post('public/premium',(req,res)=>{
@@ -76,4 +61,19 @@ app.post('public/premium',(req,res)=>{
 app.patch('public/premium',(req,res)=>{
     res.statusCode=200;
     res.json({"message": "Premium subscription updated"});
+});
+
+app.use(express.static(path.join(serverFolder, 'public')));
+
+app.use((req,res)=>{
+    if(req.path.startsWith('/api')){
+        return res.status(404).json({error: 'Not found'});
+    }else{
+        return res.status(404).type('text/plain').send('Page not found');
+    }
+});
+
+const PORT=process.env.PORT??3000;
+app.listen(PORT,()=>{
+    console.log(`server is running at http://localhost:${PORT}`);
 });
