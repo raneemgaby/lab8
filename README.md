@@ -1,7 +1,7 @@
 ## How to install and run the project
-first the reposiry needs to get cloned:git clone <repository-url>
+first the reposiry needs to get cloned:git clone <https://github.com/raneemgaby/lab8>
 then change the current directory to the project's directory:cd lab8
-then we install the dependency list:npm ci
+then we install the dependency from package-lock.json list:npm ci
 then we write:npm run dev to run the server automatically in case of anychanges.
 
 ## File Organization
@@ -72,6 +72,15 @@ Page not found
 4. because a computer can run multiple servers on different ports,reading process.env.PORT lets the enviroment choose an available port and avoids hard-coding one.
 5. node_modules/ is not committed because it contains downloaded dependencies, can be large, and can be recreated. The project lists its dependencies in package.json and records their exact versions in package-lock.json. After cloning the repository, a teammate should run npm ci to install the dependencies, then npm run dev to start the server.
 6.  Opening an API page with relative URL directly from my computer can still display the page,but the page isn’t being served by Express, so its relative API requests won’t go to  server at localhost:3000. The browser’s relevant security rule is the same-origin policy; CORS is how cross-origin access can be allowed.
+
+## Middleware Notes
+
+The logger and request counter are registered before the routes and static-file
+middleware, so they run for every request, including static files and requests
+that reach the 404 fallback. The logger runs first to print the timestamp,
+method, and URL, then calls `next()`. The counter runs next, increments the
+count, and calls `next()` so the request can continue to its route or the 404
+fallback.
 
 ## Self-Study
 ### Request timestamps

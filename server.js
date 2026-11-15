@@ -1,23 +1,24 @@
 import express from 'express';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+
 const courses=[{'id':1,'title':'web prog','credits':6},
 {'id':2,'title':'interface-designing','credits':3},
-{'id':3,'title':'OOP','creditscur':5}];
+{'id':3,'title':'OOP','credits':5}];
 
 const app=express();
 const serverFolder=path.dirname(fileURLToPath(import.meta.url));
 
 let requestsServed=0;
-app.use((req,res,next)=>{
+app.use((req,res,next)=>{                  //log each request before it reaches a route
     console.log(`${new Date().toISOString()} ${req.method} ${req.url}`);
     next();
 });
-app.use((req,res,next)=>{
+app.use((req,res,next)=>{                 //count requests before route and static-file handling
     requestsServed++;
     next();
 })
-
+// Page and API routes.
 app.get('/',(req,res)=>{
     res.sendFile(path.join(serverFolder, 'public', 'index.html'));
      
@@ -63,9 +64,9 @@ app.patch('public/premium',(req,res)=>{
     res.json({"message": "Premium subscription updated"});
 });
 
-app.use(express.static(path.join(serverFolder, 'public')));
+app.use(express.static(path.join(serverFolder, 'public'))); //serve public/files using a path based on this server file.
 
-app.use((req,res)=>{
+app.use((req,res)=>{                                        //return the appropriate response for unmatched paths.
     if(req.path.startsWith('/api')){
         return res.status(404).json({error: 'Not found'});
     }else{
@@ -73,7 +74,7 @@ app.use((req,res)=>{
     }
 });
 
-const PORT=process.env.PORT??3000;
+const PORT=process.env.PORT??3000;                          //use the configured port,or 3000 by default.
 app.listen(PORT,()=>{
     console.log(`server is running at http://localhost:${PORT}`);
 });

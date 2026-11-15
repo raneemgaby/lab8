@@ -1,12 +1,13 @@
 <!doctype html>
 <html lang="en">
-<head>
+<head>                                                                   <!--load the external stylesheet and deferred script-->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>API Route Explorer</title>
   <link rel="stylesheet" href="/styles.css">
   <script src="/app.js" defer></script>
 </head>
+
 <body>
   <main class="page">
     <header class="intro">
@@ -19,7 +20,7 @@
       </p>
     </header>
 
-    <section class="panel" aria-labelledby="routes-title">
+    <section class="panel" aria-labelledby="routes-title">                 <!--buttons for the API routes demonstrated on this page-->
       <h2 id="routes-title">Try an API route</h2>
       <div class="route-list">
         <button type="button" data-route="/api/courses">GET <code>/api/courses</code></button>
@@ -32,7 +33,7 @@
       </div>
     </section>
 
-    <section class="panel response-panel" aria-labelledby="response-title">
+    <section class="panel response-panel" aria-labelledby="response-title">    <!--shows the selected route's status and response body-->
       <h2 id="response-title">Response</h2>
       <p id="response-status" role="status" aria-live="polite">Choose a route to begin.</p>
       <pre id="response-body">The server response will appear here.</pre>
